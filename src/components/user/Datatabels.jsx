@@ -28,6 +28,7 @@ function Datatabels() {
     const fetchData = async () => {
       try {
         const result = await getOrderhistoryApi();
+        console.log("API Data:", result); // Log dữ liệu từ API
         setData(result);
         setError(null); // Clear error on success
       } catch (error) {
