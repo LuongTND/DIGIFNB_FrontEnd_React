@@ -11,17 +11,17 @@ function Datatabels() {
 
 
   // Hàm gọi API POST với body
-  const postCrawlOrders = async () => {
-    try {
-      const response = await axios.post('https://localhost:7182/api/DataGrab/crawl-orders', {
-        username: '47nguyenvanthoai@gmail.com',
-        password: 'Bahung12345'
-      });
-      console.log('Crawl orders response:', response.data);
-    } catch (error) {
-      console.error('Error posting crawl orders:', error);
-    }
-  };
+  // const postCrawlOrders = async () => {
+  //   try {
+  //     const response = await axios.post('https://localhost:7182/api/DataGrab/crawl-orders', {
+  //       username: '47nguyenvanthoai@gmail.com',
+  //       password: 'Bahung12345'
+  //     });
+  //     console.log('Crawl orders response:', response.data);
+  //   } catch (error) {
+  //     console.error('Error posting crawl orders:', error);
+  //   }
+  // };
 
 
   useEffect(() => {
@@ -64,11 +64,11 @@ function Datatabels() {
   if (!paused) {
     fetchData();
     const intervalFetch = setInterval(fetchData, 5000);
-    const intervalPost = setInterval(postCrawlOrders, 240000);
+    //const intervalPost = setInterval(postCrawlOrders, 240000);
 
     return () => {
       clearInterval(intervalFetch);
-      clearInterval(intervalPost);
+      //clearInterval(intervalPost);
     };
   }
 }, [paused]);
