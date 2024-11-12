@@ -20,9 +20,12 @@ export const getOrderhistoryApi = async () => {
   try {
     const response = await axios.get('/api/DataGrab/get-data-oderhistory', {
       headers: {
+        'Accept': 'application/json',
+    'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
         'Pragma': 'no-cache',
         'Expires': '0',
+
       },
     });
     return response.data;
