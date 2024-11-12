@@ -181,25 +181,9 @@ function Datatabels() {
           ))
         }
                         </tbody> */}
-                        <tbody>
-              {data.length > 0 ? (
-                data.map((order, index) => (
-                  <tr key={index}>
-                    <td>{order.longOrderId}</td>
-                    <td>{order.shortOrderId}</td>
-                    <td>{order.totalAmount.toLocaleString()}</td>
-                    <td>{order.status}</td>
-                    <td>{new Date(order.createdAt).toLocaleString()}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5">No data available</td>
-                </tr>
-              )}
-            </tbody>
+                        
                 
-                        {/* <tbody>
+                        <tbody>
                           {Array.isArray(data) && data.length > 0 ? (
                             data.map((order, index) => (
                               <tr key={index}>
@@ -215,7 +199,7 @@ function Datatabels() {
                               <td colSpan="5">No data available</td>
                             </tr>
                           )}
-                        </tbody> */}
+                        </tbody>
 
                         {/* <thead>
                           <tr>
