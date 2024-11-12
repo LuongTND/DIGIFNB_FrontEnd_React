@@ -27,13 +27,30 @@ function Datatabels() {
   };
 
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getOrderhistoryApi();
+  //       setData(result);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  // Gọi API để lấy dữ liệu
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getOrderhistoryApi();
-        setData(result);
+        //console.log('Fetched data:', result);
+        // Kiểm tra dữ liệu trả về có phải là mảng không
+        if (Array.isArray(result)) {
+          setData(result);
+        } else {
+          setData([]);  // Nếu không phải mảng, set data là mảng rỗng
+        }
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching order history data:', error);
+        setData([]);  // Nếu có lỗi, set data là mảng rỗng
       }
     };
 
@@ -173,7 +190,7 @@ function Datatabels() {
                             <th>Created At</th>
                           </tr>
                         </tfoot>
-                        <tbody>
+                        {/* <tbody>
                         {
           data.map((order, index) => (
             <tr key={index}>
@@ -185,7 +202,25 @@ function Datatabels() {
             </tr>
           ))
         }
+                        </tbody> */}
+                        <tbody>
+                          {Array.isArray(data) && data.length > 0 ? (
+                            data.map((order, index) => (
+                              <tr key={index}>
+                                <td>{order.longOrderId}</td>
+                                <td>{order.shortOrderId}</td>
+                                <td>{order.totalAmount.toLocaleString()}</td>
+                                <td>{order.status}</td>
+                                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan="5">No data available</td>
+                            </tr>
+                          )}
                         </tbody>
+
                         {/* <thead>
                           <tr>
                             <th>Name</th>
