@@ -41,7 +41,6 @@ function Datatabels() {
     const fetchData = async () => {
       try {
         const result = await getOrderhistoryApi();
-        //console.log('Fetched data:', result);
         // Kiểm tra dữ liệu trả về có phải là mảng không
         if (Array.isArray(result)) {
           setData(result);
@@ -49,8 +48,8 @@ function Datatabels() {
           setData([]);  // Nếu không phải mảng, set data là mảng rỗng
         }
       } catch (error) {
-        console.error('Error fetching order history data:', error);
-        setData([]);  // Nếu có lỗi, set data là mảng rỗng
+         console.log(error);
+        //setData([]);  // Nếu có lỗi, set data là mảng rỗng
       }
     };
 
