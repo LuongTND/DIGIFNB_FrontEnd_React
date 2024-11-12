@@ -31,7 +31,8 @@ function Index() {
               <a href="/?tab=dasboard" className="logo">
                 <img
                   // src="assets/img/kaiadmin/logo_light.svg"
-                  src="assets/img/kaiadmin/logo_digifnb.png"
+                  // src="assets/img/kaiadmin/logo_digifnb.png"
+                  src="assets/img/logo_digifnb.jpg"
                   alt="navbar brand"
                   className="navbar-brand"
                   height="50"
