@@ -4,14 +4,11 @@ import axios from 'axios';
 
 function Datatabels() {
 
-  //  const [data,setData]=useState([{
-  //   // name:"luong",
-  //   // id:"123"
-  //  }]);
   
   const [data, setData] = useState([]);
   const [paused, setPaused] = useState(false); // State để kiểm soát tạm dừng
-  // const tableRef = useRef(null);
+  const [error, setError] = useState(null);
+
 
   // Hàm gọi API POST với body
   const postCrawlOrders = async () => {
@@ -27,74 +24,56 @@ function Datatabels() {
   };
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await getOrderhistoryApi();
-  //       setData(result);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  // Gọi API để lấy dữ liệu
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getOrderhistoryApi();
-        // Kiểm tra dữ liệu trả về có phải là mảng không
-        if (Array.isArray(result)) {
-          setData(result);
-        } else {
-          setData([]);  // Nếu không phải mảng, set data là mảng rỗng
-        }
+        setData(result);
+        setError(null); // Clear error on success
       } catch (error) {
-         console.log(error);
-        //setData([]);  // Nếu có lỗi, set data là mảng rỗng
+        console.error('Error fetching order history data:', error);
+        setError('Failed to fetch order data.');
+        setData([]);
       }
     };
 
-    // Thiết lập polling, gọi API POST mỗi 4 phút (240000 ms)
-    const intervalPost = setInterval(() => {
-      if (!paused) {
-        postCrawlOrders();
-      }
-    }, 40000);  // 4 phút (240000ms)
+  //   // Thiết lập polling, gọi API POST mỗi 4 phút (240000 ms)
+  //   const intervalPost = setInterval(() => {
+  //     if (!paused) {
+  //       postCrawlOrders();
+  //     }
+  //   }, 40000);  // 4 phút (240000ms)
 
 
-    // Gọi API lần đầu tiên
+  //   // Gọi API lần đầu tiên
+  //   fetchData();
+
+  //   // Thiết lập polling, gọi API mỗi 5 giây
+  //   const intervalFetch = setInterval(() => {
+  //     fetchData();
+  //   }, 5000);  // Thời gian 5 giây (5000ms)
+
+  //   // Hủy bỏ interval khi component unmount
+  //   return () => {
+  //     clearInterval(intervalFetch);
+  //     clearInterval(intervalPost);
+  //   };
+  // }, [paused]);
+
+  if (!paused) {
     fetchData();
+    const intervalFetch = setInterval(fetchData, 5000);
+    const intervalPost = setInterval(postCrawlOrders, 240000);
 
-    // Thiết lập polling, gọi API mỗi 5 giây
-    const intervalFetch = setInterval(() => {
-      fetchData();
-    }, 5000);  // Thời gian 5 giây (5000ms)
-
-
-    
-
-    // Hủy bỏ interval khi component unmount
     return () => {
       clearInterval(intervalFetch);
       clearInterval(intervalPost);
     };
-  }, [paused]);
-
-  /* eslint-disable no-undef */
-// useEffect(() => {
-//     if (data.length > 0) {
-//       const table = $(tableRef.current).DataTable();
-
-//       return () => {
-//         table.destroy();
-//       };
-//     }
-//   }, [data]);
-/* eslint-enable no-undef */
+  }
+}, [paused]);
 
    // Hàm toggle để tạm dừng và tiếp tục
-   const togglePause = () => {
-    setPaused(!paused);
-  };
+   const togglePause = () => setPaused(!paused);
 
   return (
     <div class="container">
@@ -203,6 +182,24 @@ function Datatabels() {
         }
                         </tbody> */}
                         <tbody>
+              {data.length > 0 ? (
+                data.map((order, index) => (
+                  <tr key={index}>
+                    <td>{order.longOrderId}</td>
+                    <td>{order.shortOrderId}</td>
+                    <td>{order.totalAmount.toLocaleString()}</td>
+                    <td>{order.status}</td>
+                    <td>{new Date(order.createdAt).toLocaleString()}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5">No data available</td>
+                </tr>
+              )}
+            </tbody>
+                
+                        {/* <tbody>
                           {Array.isArray(data) && data.length > 0 ? (
                             data.map((order, index) => (
                               <tr key={index}>
@@ -218,7 +215,7 @@ function Datatabels() {
                               <td colSpan="5">No data available</td>
                             </tr>
                           )}
-                        </tbody>
+                        </tbody> */}
 
                         {/* <thead>
                           <tr>
