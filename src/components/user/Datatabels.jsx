@@ -12,9 +12,10 @@ function Datatabels() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getOrderhistoryApi();
-        console.log("API Data:", result); // Log dữ liệu từ API
-        setData(result);
+        // const result = await getOrderhistoryApi();
+        const result = await axios.get('/api/DataGrab/get-data-oderhistory');
+        console.log("API Data:", result.data); // Log dữ liệu từ API
+        setData(result.data);
         setError(null); // Clear error on success
       } catch (error) {
         console.error('Error fetching order history data:', error);
