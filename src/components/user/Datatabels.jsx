@@ -74,7 +74,7 @@ function Datatabels() {
             
 
 
-         <div>
+         {/* <div>
             <table >
               <thead>
                 <tr>
@@ -98,7 +98,7 @@ function Datatabels() {
                 ))}
               </tbody>
               </table>
-            </div> 
+            </div>  */}
 
 
             <div class="row">
