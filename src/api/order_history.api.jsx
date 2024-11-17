@@ -6,7 +6,7 @@ export const getOrderhistoryApi = async () => {
    // const response = await axios.get('/DataGrab/get-data-oderhistory');
     return response.data;  // return dữ liệu từ API
   } catch (error) {
-    // console.error('Error fetching order history data:', error);
+   console.error('Error fetching order history data:', error);
     throw error;
   }
 };
