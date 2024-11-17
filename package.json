@@ -2,6 +2,7 @@
   "name": "myproject",
   "version": "0.1.0",
   "private": true,
+"proxy": "http://digifnbv1.runasp.net",
 
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
