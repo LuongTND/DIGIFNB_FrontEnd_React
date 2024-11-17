@@ -9,21 +9,6 @@ function Datatabels() {
   const [paused, setPaused] = useState(false); // State để kiểm soát tạm dừng
   const [error, setError] = useState(null);
 
-
-  // Hàm gọi API POST với body
-  // const postCrawlOrders = async () => {
-  //   try {
-  //     const response = await axios.post('https://localhost:7182/api/DataGrab/crawl-orders', {
-  //       username: '47nguyenvanthoai@gmail.com',
-  //       password: 'Bahung12345'
-  //     });
-  //     console.log('Crawl orders response:', response.data);
-  //   } catch (error) {
-  //     console.error('Error posting crawl orders:', error);
-  //   }
-  // };
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,29 +22,6 @@ function Datatabels() {
         setData([]);
       }
     };
-
-  //   // Thiết lập polling, gọi API POST mỗi 4 phút (240000 ms)
-  //   const intervalPost = setInterval(() => {
-  //     if (!paused) {
-  //       postCrawlOrders();
-  //     }
-  //   }, 40000);  // 4 phút (240000ms)
-
-
-  //   // Gọi API lần đầu tiên
-  //   fetchData();
-
-  //   // Thiết lập polling, gọi API mỗi 5 giây
-  //   const intervalFetch = setInterval(() => {
-  //     fetchData();
-  //   }, 5000);  // Thời gian 5 giây (5000ms)
-
-  //   // Hủy bỏ interval khi component unmount
-  //   return () => {
-  //     clearInterval(intervalFetch);
-  //     clearInterval(intervalPost);
-  //   };
-  // }, [paused]);
 
   if (!paused) {
     fetchData();
@@ -112,7 +74,7 @@ function Datatabels() {
             
 
 
-            {/* <div>
+         <div>
             <table >
               <thead>
                 <tr>
@@ -136,7 +98,7 @@ function Datatabels() {
                 ))}
               </tbody>
               </table>
-            </div> */}
+            </div> 
 
 
             <div class="row">
@@ -202,45 +164,7 @@ function Datatabels() {
                           )}
                         </tbody>
 
-                        {/* <thead>
-                          <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                          </tr>
-                        </thead>
-                        <tfoot>
-                          <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                          </tr>
-                        </tfoot>
-                        <tbody>
-                          
-                          <tr>
-                            <td>Michael Bruce</td>
-                            <td>Javascript Developer</td>
-                            <td>Singapore</td>
-                            <td>29</td>
-                            <td>2011/06/27</td>
-                            <td>$183,000</td>
-                          </tr>
-                          <tr>
-                            <td>Donna Snider</td>
-                            <td>Customer Support</td>
-                            <td>New York</td>
-                            <td>27</td>
-                            <td>2011/01/25</td>
-                            <td>$112,000</td>
-                          </tr>
-                        </tbody> */}
+                       
                       </table>
                     </div>
                   </div>
