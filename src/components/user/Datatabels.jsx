@@ -13,7 +13,7 @@ function Datatabels() {
     const fetchData = async () => {
       try {
         // const result = await getOrderhistoryApi();
-        const result = await axios.get('/api/DataGrab/get-data-oderhistory');
+        const result = await axios.get('https://digifnbbackendapi2024.azurewebsites.net/api/DataGrab/get-data-oderhistory');
         console.log("API Data:", result.data); // Log dữ liệu từ API
         setData(result.data);
         setError(null); // Clear error on success
