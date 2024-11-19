@@ -155,7 +155,8 @@ function Datatabels() {
                                 <td>{order.shortOrderId}</td>
                                 <td>{order.totalAmount.toLocaleString()}</td>
                                 <td>{order.status}</td>
-                                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                                {/* <td>{new Date(order.createdAt).toLocaleDateString()}</td> */}
+                                <td>{order.createdAt}</td>
                               </tr>
                             ))
                           ) : (
