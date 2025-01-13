@@ -23,7 +23,7 @@ function Datatabels() {
         setData([]);
       }
     };
-
+  // thay đổi
   if (!paused) {
     fetchData();
     const intervalFetch = setInterval(fetchData, 5000);
