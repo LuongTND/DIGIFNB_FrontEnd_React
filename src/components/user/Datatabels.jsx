@@ -1,5 +1,175 @@
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+// function Datatables() {
+//   const [orderData, setOrderData] = useState([]);
+//   const [totalRecords, setTotalRecords] = useState(0);
+//   const [pageNumber, setPageNumber] = useState(1);
+//   const [pageSize, setPageSize] = useState(10);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [selectedOrder, setSelectedOrder] = useState(null);
+
+//   const API_BASE_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails";
+
+//   const fetchOrderData = async () => {
+//     setLoading(true);
+//     setError(null);
+//     try {
+//       const response = await axios.get(
+//         `${API_BASE_URL}/history-without-item?pageNumber=${pageNumber}&pageSize=${pageSize}`
+//       );
+//       setOrderData(response.data.data);
+//       setTotalRecords(response.data.totalRecords);
+//     } catch (err) {
+//       setError("Failed to fetch order data.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const fetchOrderDetails = async (orderId) => {
+//     setLoading(true);
+//     setError(null);
+//     try {
+//       const response = await axios.get(`${API_BASE_URL}/history-details-${orderId}`);
+//       setSelectedOrder(response.data);
+//     } catch (err) {
+//       setError("Failed to fetch order details.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchOrderData();
+//   }, [pageNumber, pageSize]);
+
+//   const totalPages = Math.ceil(totalRecords / pageSize);
+
+//   const handlePageChange = (newPage) => {
+//     if (newPage > 0 && newPage <= totalPages) {
+//       setPageNumber(newPage);
+//     }
+//   };
+
+//   return (
+//     <div className="container">
+//       <div className="page-inner">
+//         <div className="page-header">
+//           <h3 className="fw-bold mb-3">Quản Lý Đơn Hàng</h3>
+//           <ul className="breadcrumbs mb-3">
+//             <li className="nav-home">
+//               <a href="#">
+//                 <i className="icon-home"></i>
+//               </a>
+//             </li>
+//             <li className="separator">
+//               <i className="icon-arrow-right"></i>
+//             </li>
+//             <li className="nav-item">
+//               <a href="#">Bảng</a>
+//             </li>
+//             <li className="separator">
+//               <i className="icon-arrow-right"></i>
+//             </li>
+//             <li className="nav-item">
+//               <a href="#">Order</a>
+//             </li>
+//           </ul>
+//         </div>
+//         <div className="row">
+//           <div className="col-md-12">
+//             <div className="card">
+//               <div className="card-header">
+//                 <h4 className="card-title">Đơn Hàng</h4>
+//               </div>
+//               <div className="card-body">
+//                 {loading ? (
+//                   <p>Loading...</p>
+//                 ) : error ? (
+//                   <p className="text-danger">{error}</p>
+//                 ) : (
+//                   <>
+//                     <div className="table-responsive">
+//                       <table className="table table-striped table-hover">
+//                         <thead>
+//                           <tr>
+//                             <th>Order ID</th>
+//                             <th>Customer</th>
+//                             <th>Created Time</th>
+//                             <th>Address</th>
+//                             <th>Total</th>
+//                             <th>Status</th>
+//                             <th>Actions</th>
+//                           </tr>
+//                         </thead>
+//                         <tbody>
+//                           {orderData.map((order) => (
+//                             <tr key={order.orderId}>
+//                               <td>{order.displayOrderId}</td>
+//                               <td>{order.eaterName || "N/A"}</td>
+//                               <td>{new Date(order.createdAt).toLocaleString()}</td>
+//                               <td>{order.eaterAddress}</td>
+//                               <td>{order.totalDisplay.toLocaleString()} VND</td>
+//                               <td>{order.state}</td>
+//                               <td>
+//                                 <button
+//                                   className="btn btn-info btn-sm"
+//                                   onClick={() => fetchOrderDetails(order.orderId)}
+//                                 >
+//                                   Xem Chi Tiết
+//                                 </button>
+//                               </td>
+//                             </tr>
+//                           ))}
+//                         </tbody>
+//                       </table>
+//                     </div>
+//                     <div className="d-flex justify-content-between align-items-center mt-3">
+//                       <button
+//                         className="btn btn-primary"
+//                         disabled={pageNumber === 1}
+//                         onClick={() => handlePageChange(pageNumber - 1)}
+//                       >
+//                         Previous
+//                       </button>
+//                       <span>
+//                         Page {pageNumber} of {totalPages}
+//                       </span>
+//                       <button
+//                         className="btn btn-primary"
+//                         disabled={pageNumber === totalPages}
+//                         onClick={() => handlePageChange(pageNumber + 1)}
+//                       >
+//                         Next
+//                       </button>
+//                     </div>
+//                   </>
+//                 )}
+
+//                 {selectedOrder && (
+//                   <div className="mt-4">
+//                     <h5>Chi Tiết Đơn Hàng</h5>
+//                     <pre>{JSON.stringify(selectedOrder, null, 2)}</pre>
+//                   </div>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Datatables;
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Datatables() {
   const [orderData, setOrderData] = useState([]);
@@ -9,15 +179,21 @@ function Datatables() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [salesReport, setSalesReport] = useState(null);
+  const [reportLoading, setReportLoading] = useState(false);
+  const [reportError, setReportError] = useState(null);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
-  const API_BASE_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails";
+  const API_BASE_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/history-without-item";
+  const REPORT_API_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/Report-Businessv2";
 
   const fetchOrderData = async () => {
     setLoading(true);
     setError(null);
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/history-without-item?pageNumber=${pageNumber}&pageSize=${pageSize}`
+        `${API_BASE_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`
       );
       setOrderData(response.data.data);
       setTotalRecords(response.data.totalRecords);
@@ -28,22 +204,28 @@ function Datatables() {
     }
   };
 
-  const fetchOrderDetails = async (orderId) => {
-    setLoading(true);
-    setError(null);
+  const fetchSalesReport = async () => {
+    setReportLoading(true);
+    setReportError(null);
     try {
-      const response = await axios.get(`${API_BASE_URL}/history-details-${orderId}`);
-      setSelectedOrder(response.data);
+      const response = await axios.get(
+        `${REPORT_API_URL}?merchantId=5-C3NEMAATL2AEA2&startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
+      );
+      setSalesReport(response.data);
     } catch (err) {
-      setError("Failed to fetch order details.");
+      setReportError("Failed to fetch sales report.");
     } finally {
-      setLoading(false);
+      setReportLoading(false);
     }
   };
 
   useEffect(() => {
     fetchOrderData();
   }, [pageNumber, pageSize]);
+
+  useEffect(() => {
+    fetchSalesReport();
+  }, [startDate, endDate]);
 
   const totalPages = Math.ceil(totalRecords / pageSize);
 
@@ -52,6 +234,32 @@ function Datatables() {
       setPageNumber(newPage);
     }
   };
+
+  const handleViewDetails = async (orderId) => {
+    try {
+      const response = await axios.get(
+        `https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/history-details-${orderId}`
+      );
+      setSelectedOrder(response.data);
+    } catch (err) {
+      alert("Failed to fetch order details.");
+    }
+  };
+
+// Function to handle start date change and set time to 00:00:00
+const handleStartDateChange = (date) => {
+  const newStartDate = new Date(date);
+  newStartDate.setHours(0, 0, 0, 0); // Set start date to 00:00:00
+  setStartDate(newStartDate);
+};
+
+// Function to handle end date change and set time to 23:59:59
+const handleEndDateChange = (date) => {
+  const newEndDate = new Date(date);
+  newEndDate.setHours(23, 59, 59, 999); // Set end date to 23:59:59
+  setEndDate(newEndDate);
+};
+
 
   return (
     <div className="container">
@@ -115,10 +323,10 @@ function Datatables() {
                               <td>{order.state}</td>
                               <td>
                                 <button
-                                  className="btn btn-info btn-sm"
-                                  onClick={() => fetchOrderDetails(order.orderId)}
+                                  className="btn btn-primary btn-sm"
+                                  onClick={() => handleViewDetails(order.orderId)}
                                 >
-                                  Xem Chi Tiết
+                                  View Details
                                 </button>
                               </td>
                             </tr>
@@ -147,16 +355,214 @@ function Datatables() {
                     </div>
                   </>
                 )}
+              </div>
+            </div>
+          </div>
 
-                {selectedOrder && (
-                  <div className="mt-4">
-                    <h5>Chi Tiết Đơn Hàng</h5>
-                    <pre>{JSON.stringify(selectedOrder, null, 2)}</pre>
+          {/* <div className="col-md-12 mt-4">
+            <div className="card">
+              <div className="card-header">
+                <h4 className="card-title">Báo cáo Sale</h4>
+              </div>
+              <div className="card-body">
+                <div className="d-flex mb-3">
+                  <div className="me-3">
+                    <label>Start Date:</label>
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      className="form-control"
+                      dateFormat="yyyy-MM-dd"
+                    />
                   </div>
+                  <div className="me-3">
+                    <label>End Date:</label>
+                    <DatePicker
+                      selected={endDate}
+                      onChange={(date) => setEndDate(date)}
+                      className="form-control"
+                      dateFormat="yyyy-MM-dd"
+                    />
+                  </div>
+                  <button
+                    className="btn btn-primary align-self-end"
+                    onClick={fetchSalesReport}
+                  >
+                    Fetch Report
+                  </button>
+                </div>
+
+                {reportLoading ? (
+                  <p>Loading report...</p>
+                ) : reportError ? (
+                  <p className="text-danger">{reportError}</p>
+                ) : salesReport ? (
+                  <div className="table-responsive">
+                    <table className="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Merchant ID</th>
+                          <td>{salesReport.merchantId}</td>
+                        </tr>
+                        <tr>
+                          <th>Start Date</th>
+                          <td>{salesReport.startDate}</td>
+                        </tr>
+                        <tr>
+                          <th>End Date</th>
+                          <td>{salesReport.endDate}</td>
+                        </tr>
+                        <tr>
+                          <th>Gross Sale</th>
+                          <td>{salesReport.grossSale.toLocaleString()} VND</td>
+                        </tr>
+                        <tr>
+                          <th>Net Sale</th>
+                          <td>{salesReport.netSale.toLocaleString()} VND</td>
+                        </tr>
+                        <tr>
+                          <th>Orders Completed</th>
+                          <td>{salesReport.orderComplete}</td>
+                        </tr>
+                        <tr>
+                          <th>Orders Cancelled</th>
+                          <td>{salesReport.orderCancelled}</td>
+                        </tr>
+                        <tr>
+                          <th>Total Eaters</th>
+                          <td>{salesReport.toltalEater}</td>
+                        </tr>
+                        <tr>
+                          <th>Repeated Eaters</th>
+                          <td>{salesReport.toltalEaterRepeated}</td>
+                        </tr>
+                        <tr>
+                          <th>Units Sold</th>
+                          <td>{salesReport.unitSold}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p>No report data available.</p>
+                )}
+              </div>
+            </div>
+          </div> */}
+          <div className="col-md-12 mt-4">
+            <div className="card">
+              <div className="card-header">
+                <h4 className="card-title">Báo cáo Sale</h4>
+              </div>
+              <div className="card-body">
+                <div className="d-flex mb-3">
+                  <div className="me-3">
+                    <label>Start Date:</label>
+                    <DatePicker
+                      selected={startDate}
+                      onChange={handleStartDateChange}
+                      className="form-control"
+                      dateFormat="yyyy-MM-dd"
+                    />
+                  </div>
+                  <div className="me-3">
+                    <label>End Date:</label>
+                    <DatePicker
+                      selected={endDate}
+                      onChange={handleEndDateChange}
+                      className="form-control"
+                      dateFormat="yyyy-MM-dd"
+                    />
+                  </div>
+                  <button
+                    className="btn btn-primary align-self-end"
+                    onClick={fetchSalesReport}
+                  >
+                    Fetch Report
+                  </button>
+                </div>
+
+                {reportLoading ? (
+                  <p>Loading report...</p>
+                ) : reportError ? (
+                  <p className="text-danger">{reportError}</p>
+                ) : salesReport ? (
+                  <div className="table-responsive">
+                    <table className="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Merchant ID</th>
+                          <td>{salesReport.merchantId}</td>
+                        </tr>
+                        <tr>
+                          <th>Start Date</th>
+                          <td>{salesReport.startDate}</td>
+                        </tr>
+                        <tr>
+                          <th>End Date</th>
+                          <td>{salesReport.endDate}</td>
+                        </tr>
+                        <tr>
+                          <th>Gross Sale</th>
+                          <td>{salesReport.grossSale.toLocaleString()} VND</td>
+                        </tr>
+                        <tr>
+                          <th>Net Sale</th>
+                          <td>{salesReport.netSale.toLocaleString()} VND</td>
+                        </tr>
+                        <tr>
+                          <th>Orders Completed</th>
+                          <td>{salesReport.orderComplete}</td>
+                        </tr>
+                        <tr>
+                          <th>Orders Cancelled</th>
+                          <td>{salesReport.orderCancelled}</td>
+                        </tr>
+                        <tr>
+                          <th>Total Eaters</th>
+                          <td>{salesReport.toltalEater}</td>
+                        </tr>
+                        <tr>
+                          <th>Repeated Eaters</th>
+                          <td>{salesReport.toltalEaterRepeated}</td>
+                        </tr>
+                        <tr>
+                          <th>Units Sold</th>
+                          <td>{salesReport.unitSold}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p>No report data available.</p>
                 )}
               </div>
             </div>
           </div>
+
+          {/* Display order details modal or section if selectedOrder is not null */}
+          {selectedOrder && (
+            <div className="modal fade show" style={{ display: "block" }} tabIndex="-1">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Order Details</h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      onClick={() => setSelectedOrder(null)}
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    {/* Order details content here */}
+                    <pre>{JSON.stringify(selectedOrder, null, 2)}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
