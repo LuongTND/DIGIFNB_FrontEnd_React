@@ -1,169 +1,4 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
 
-// function Datatables() {
-//   const [orderData, setOrderData] = useState([]);
-//   const [totalRecords, setTotalRecords] = useState(0);
-//   const [pageNumber, setPageNumber] = useState(1);
-//   const [pageSize, setPageSize] = useState(10);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [selectedOrder, setSelectedOrder] = useState(null);
-
-//   const API_BASE_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails";
-
-//   const fetchOrderData = async () => {
-//     setLoading(true);
-//     setError(null);
-//     try {
-//       const response = await axios.get(
-//         `${API_BASE_URL}/history-without-item?pageNumber=${pageNumber}&pageSize=${pageSize}`
-//       );
-//       setOrderData(response.data.data);
-//       setTotalRecords(response.data.totalRecords);
-//     } catch (err) {
-//       setError("Failed to fetch order data.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const fetchOrderDetails = async (orderId) => {
-//     setLoading(true);
-//     setError(null);
-//     try {
-//       const response = await axios.get(`${API_BASE_URL}/history-details-${orderId}`);
-//       setSelectedOrder(response.data);
-//     } catch (err) {
-//       setError("Failed to fetch order details.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchOrderData();
-//   }, [pageNumber, pageSize]);
-
-//   const totalPages = Math.ceil(totalRecords / pageSize);
-
-//   const handlePageChange = (newPage) => {
-//     if (newPage > 0 && newPage <= totalPages) {
-//       setPageNumber(newPage);
-//     }
-//   };
-
-//   return (
-//     <div className="container">
-//       <div className="page-inner">
-//         <div className="page-header">
-//           <h3 className="fw-bold mb-3">Quản Lý Đơn Hàng</h3>
-//           <ul className="breadcrumbs mb-3">
-//             <li className="nav-home">
-//               <a href="#">
-//                 <i className="icon-home"></i>
-//               </a>
-//             </li>
-//             <li className="separator">
-//               <i className="icon-arrow-right"></i>
-//             </li>
-//             <li className="nav-item">
-//               <a href="#">Bảng</a>
-//             </li>
-//             <li className="separator">
-//               <i className="icon-arrow-right"></i>
-//             </li>
-//             <li className="nav-item">
-//               <a href="#">Order</a>
-//             </li>
-//           </ul>
-//         </div>
-//         <div className="row">
-//           <div className="col-md-12">
-//             <div className="card">
-//               <div className="card-header">
-//                 <h4 className="card-title">Đơn Hàng</h4>
-//               </div>
-//               <div className="card-body">
-//                 {loading ? (
-//                   <p>Loading...</p>
-//                 ) : error ? (
-//                   <p className="text-danger">{error}</p>
-//                 ) : (
-//                   <>
-//                     <div className="table-responsive">
-//                       <table className="table table-striped table-hover">
-//                         <thead>
-//                           <tr>
-//                             <th>Order ID</th>
-//                             <th>Customer</th>
-//                             <th>Created Time</th>
-//                             <th>Address</th>
-//                             <th>Total</th>
-//                             <th>Status</th>
-//                             <th>Actions</th>
-//                           </tr>
-//                         </thead>
-//                         <tbody>
-//                           {orderData.map((order) => (
-//                             <tr key={order.orderId}>
-//                               <td>{order.displayOrderId}</td>
-//                               <td>{order.eaterName || "N/A"}</td>
-//                               <td>{new Date(order.createdAt).toLocaleString()}</td>
-//                               <td>{order.eaterAddress}</td>
-//                               <td>{order.totalDisplay.toLocaleString()} VND</td>
-//                               <td>{order.state}</td>
-//                               <td>
-//                                 <button
-//                                   className="btn btn-info btn-sm"
-//                                   onClick={() => fetchOrderDetails(order.orderId)}
-//                                 >
-//                                   Xem Chi Tiết
-//                                 </button>
-//                               </td>
-//                             </tr>
-//                           ))}
-//                         </tbody>
-//                       </table>
-//                     </div>
-//                     <div className="d-flex justify-content-between align-items-center mt-3">
-//                       <button
-//                         className="btn btn-primary"
-//                         disabled={pageNumber === 1}
-//                         onClick={() => handlePageChange(pageNumber - 1)}
-//                       >
-//                         Previous
-//                       </button>
-//                       <span>
-//                         Page {pageNumber} of {totalPages}
-//                       </span>
-//                       <button
-//                         className="btn btn-primary"
-//                         disabled={pageNumber === totalPages}
-//                         onClick={() => handlePageChange(pageNumber + 1)}
-//                       >
-//                         Next
-//                       </button>
-//                     </div>
-//                   </>
-//                 )}
-
-//                 {selectedOrder && (
-//                   <div className="mt-4">
-//                     <h5>Chi Tiết Đơn Hàng</h5>
-//                     <pre>{JSON.stringify(selectedOrder, null, 2)}</pre>
-//                   </div>
-//                 )}
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Datatables;
 
 
 import React, { useEffect, useState } from "react";
@@ -172,10 +7,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function Datatables() {
-  const [orderData, setOrderData] = useState([]);
+  const [orderData1, setOrderData1] = useState([]);
+  const [orderData2, setOrderData2] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [totalRecords2, setTotalRecords2] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [pageNumber2, setPageNumber2] = useState(1);
+  const [pageSize2, setPageSize2] = useState(10);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -185,18 +24,34 @@ function Datatables() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const API_BASE_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/history-without-item";
+  const API_BASE_URL1 = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/history-without-item";
+  const API_BASE_URL2 = "https://digifnbbackendapiv2.azurewebsites.net/api/PreparingDetails/preparing-without-item";
   const REPORT_API_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/Report-Businessv2";
 
-  const fetchOrderData = async () => {
+  const fetchOrderData1 = async () => {
     setLoading(true);
     setError(null);
     try {
       const response = await axios.get(
-        `${API_BASE_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+        `${API_BASE_URL1}?pageNumber=${pageNumber}&pageSize=${pageSize}`
       );
-      setOrderData(response.data.data);
+      setOrderData1(response.data.data);
       setTotalRecords(response.data.totalRecords);
+    } catch (err) {
+      setError("Failed to fetch order data.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchOrderData2 = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL2}?pageNumber=${pageNumber2}&pageSize=${pageSize2}`
+      );
+      setOrderData2(response.data.data);
+      setTotalRecords2(response.data.totalRecords2);
     } catch (err) {
       setError("Failed to fetch order data.");
     } finally {
@@ -220,25 +75,45 @@ function Datatables() {
   };
 
   useEffect(() => {
-    fetchOrderData();
+    fetchOrderData1();
   }, [pageNumber, pageSize]);
+
+  useEffect(() => {
+    fetchOrderData2();
+  }, [pageNumber2, pageSize2]);
 
   useEffect(() => {
     fetchSalesReport();
   }, [startDate, endDate]);
 
   const totalPages = Math.ceil(totalRecords / pageSize);
+  const totalPages2 = Math.ceil(totalRecords2 / pageSize2);
 
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       setPageNumber(newPage);
     }
   };
+  const handlePageChange2 = (newPage) => {
+    if (newPage > 0 && newPage <= totalPages2) {
+      setPageNumber2(newPage);
+    }
+  };
 
-  const handleViewDetails = async (orderId) => {
+  const handleViewDetails1 = async (orderId) => {
     try {
       const response = await axios.get(
         `https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/history-details-${orderId}`
+      );
+      setSelectedOrder(response.data);
+    } catch (err) {
+      alert("Failed to fetch order details.");
+    }
+  };
+  const handleViewDetails2 = async (orderId) => {
+    try {
+      const response = await axios.get(
+        `https://digifnbbackendapiv2.azurewebsites.net/api/PreparingDetails/preparing-details-${orderId}`
       );
       setSelectedOrder(response.data);
     } catch (err) {
@@ -290,7 +165,7 @@ const handleEndDateChange = (date) => {
           <div className="col-md-12">
             <div className="card">
               <div className="card-header">
-                <h4 className="card-title">Đơn Hàng</h4>
+                <h4 className="card-title">Đơn Hàng History</h4>
               </div>
               <div className="card-body">
                 {loading ? (
@@ -313,7 +188,7 @@ const handleEndDateChange = (date) => {
                           </tr>
                         </thead>
                         <tbody>
-                          {orderData.map((order) => (
+                          {orderData1.map((order) => (
                             <tr key={order.orderId}>
                               <td>{order.displayOrderId}</td>
                               <td>{order.eaterName || "N/A"}</td>
@@ -324,7 +199,7 @@ const handleEndDateChange = (date) => {
                               <td>
                                 <button
                                   className="btn btn-primary btn-sm"
-                                  onClick={() => handleViewDetails(order.orderId)}
+                                  onClick={() => handleViewDetails1(order.orderId)}
                                 >
                                   View Details
                                 </button>
@@ -449,6 +324,78 @@ const handleEndDateChange = (date) => {
               </div>
             </div>
           </div> */}
+                    <div className="col-md-12">
+            <div className="card">
+              <div className="card-header">
+                <h4 className="card-title">Đơn Hàng Preparing</h4>
+              </div>
+              <div className="card-body">
+                {loading ? (
+                  <p>Loading...</p>
+                ) : error ? (
+                  <p className="text-danger">{error}</p>
+                ) : (
+                  <>
+                    <div className="table-responsive">
+                      <table className="table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Created Time</th>
+                            <th>Address</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {orderData2.map((order) => (
+                            <tr key={order.orderId}>
+                              <td>{order.displayOrderId}</td>
+                              <td>{order.eaterName || "N/A"}</td>
+                              <td>{new Date(order.createdAt).toLocaleString()}</td>
+                              <td>{order.eaterAddress}</td>
+                              <td>{order.totalDisplay.toLocaleString()} VND</td>
+                              <td>{order.state}</td>
+                              <td>
+                                <button
+                                  className="btn btn-primary btn-sm"
+                                  onClick={() => handleViewDetails2(order.orderId)}
+                                >
+                                  View Details
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mt-3">
+                      <button
+                        className="btn btn-primary"
+                        disabled={pageNumber2 === 1}
+                        onClick={() => handlePageChange2(pageNumber2 - 1)}
+                      >
+                        Previous
+                      </button>
+                      <span>
+                        Page {pageNumber2} of {totalPages2}
+                      </span>
+                      <button
+                        className="btn btn-primary"
+                        disabled={pageNumber2 === totalPages2}
+                        onClick={() => handlePageChange2(pageNumber2 + 1)}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
           <div className="col-md-12 mt-4">
             <div className="card">
               <div className="card-header">
