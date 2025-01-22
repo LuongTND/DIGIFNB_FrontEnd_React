@@ -24,10 +24,11 @@ function Datatables() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const API_BASE_URL1 = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/history-without-item";
-  const API_BASE_URL2 = "https://digifnbbackendapiv2.azurewebsites.net/api/PreparingDetails/preparing-without-item";
-  const REPORT_API_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/Report-Businessv2";
-
+  const API_BASE_URL1 = "https://160.30.160.232/api/HistoryDetails/history-without-item";
+  // const API_BASE_URL2 = "https://digifnbbackendapiv2.azurewebsites.net/api/PreparingDetails/preparing-without-item";
+  // const REPORT_API_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/Report-Businessv2";
+  const API_BASE_URL2 = "https://160.30.160.232/api/PreparingDetails/preparing-without-item";
+  const REPORT_API_URL = "https://160.30.160.232/api/HistoryDetails/Report-Businessv2";
   const fetchOrderData1 = async () => {
     setLoading(true);
     setError(null);
@@ -103,7 +104,7 @@ function Datatables() {
   const handleViewDetails1 = async (orderId) => {
     try {
       const response = await axios.get(
-        `https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/history-details-${orderId}`
+        `https://160.30.160.232/api/HistoryDetails/history-details-${orderId}`
       );
       setSelectedOrder(response.data);
     } catch (err) {
@@ -113,7 +114,7 @@ function Datatables() {
   const handleViewDetails2 = async (orderId) => {
     try {
       const response = await axios.get(
-        `https://digifnbbackendapiv2.azurewebsites.net/api/PreparingDetails/preparing-details-${orderId}`
+        `https://160.30.160.232/api/PreparingDetails/preparing-details-${orderId}`
       );
       setSelectedOrder(response.data);
     } catch (err) {
