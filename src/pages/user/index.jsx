@@ -178,10 +178,10 @@ function Index() {
                 <li className="nav-item">
                   <a data-bs-toggle="collapse" href="#tables">
                     <i className="fas fa-comments"></i>
-                    <p>Gửi Zalo</p>
+                    <p>Thông báo Zalo</p>
                     <span className="caret"></span>
                   </a>
-                  <div className="collapse" id="tables">
+                  {/* <div className="collapse" id="tables">
                     <ul className="nav nav-collapse">
                       <li>
                         <a href="tables/tables.html">
@@ -194,7 +194,7 @@ function Index() {
                         </a>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                 </li>
                 <li className="nav-item">
                   <a data-bs-toggle="collapse" href="#tables">
