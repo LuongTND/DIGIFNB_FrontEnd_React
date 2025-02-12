@@ -23,12 +23,17 @@ function Datatables() {
   const [reportError, setReportError] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-
-  const API_BASE_URL1 = "https://160.30.160.232/api/HistoryDetails/history-without-item";
+   //http://160.30.160.232:5050/api/Merchant
+  // const API_BASE_URL1 = "https://160.30.160.232/api/HistoryDetails/history-without-item";
+  // // const API_BASE_URL2 = "https://digifnbbackendapiv2.azurewebsites.net/api/PreparingDetails/preparing-without-item";
+  // // const REPORT_API_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/Report-Businessv2";
+  // const API_BASE_URL2 = "https://160.30.160.232/api/PreparingDetails/preparing-without-item";
+  // const REPORT_API_URL = "https://160.30.160.232/api/HistoryDetails/Report-Businessv2";
+  const API_BASE_URL1 = "http://160.30.160.232:5050/api/HistoryDetails/history-without-item";
   // const API_BASE_URL2 = "https://digifnbbackendapiv2.azurewebsites.net/api/PreparingDetails/preparing-without-item";
   // const REPORT_API_URL = "https://digifnbbackendapiv2.azurewebsites.net/api/HistoryDetails/Report-Businessv2";
-  const API_BASE_URL2 = "https://160.30.160.232/api/PreparingDetails/preparing-without-item";
-  const REPORT_API_URL = "https://160.30.160.232/api/HistoryDetails/Report-Businessv2";
+  const API_BASE_URL2 = "http://160.30.160.232:5050/api/PreparingDetails/preparing-without-item";
+  const REPORT_API_URL = "http://160.30.160.232:5050/api/HistoryDetails/Report-Businessv2";
   const fetchOrderData1 = async () => {
     setLoading(true);
     setError(null);
