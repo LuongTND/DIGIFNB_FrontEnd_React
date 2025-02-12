@@ -109,7 +109,7 @@ function Datatables() {
   const handleViewDetails1 = async (orderId) => {
     try {
       const response = await axios.get(
-        `https://160.30.160.232/api/HistoryDetails/history-details-${orderId}`
+        `http://160.30.160.232:5050/api/HistoryDetails/history-details-${orderId}`
       );
       setSelectedOrder(response.data);
     } catch (err) {
@@ -119,7 +119,7 @@ function Datatables() {
   const handleViewDetails2 = async (orderId) => {
     try {
       const response = await axios.get(
-        `https://160.30.160.232/api/PreparingDetails/preparing-details-${orderId}`
+        `http://160.30.160.232:5050/api/PreparingDetails/preparing-details-${orderId}`
       );
       setSelectedOrder(response.data);
     } catch (err) {
